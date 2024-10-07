@@ -85,6 +85,19 @@ if (isset($_POST['operacio_numerica'])) {
             $operacio_text = "$num1 $operacio $num2 = $resultat";
         }
     }
+    if ($resultat !== null) {
+        array_unshift($historial, $operacio_text);
+    }   
+}
+if (isset($_POST['operacio_string'])) {
+    $string1 = $_POST['string1'];
+    $string2 = $_POST['string2'];
+    $operacio = $_POST['operacio_string'];
+    $resultat = operacio_string($string1, $string2, $operacio);
+    $operacio_text = "$string1 $operacio $string2 = $resultat";
+    if ($resultat !== null) {
+        array_unshift($historial, $operacio_text);
+    }
 }
 ?>
 
@@ -93,7 +106,7 @@ if (isset($_POST['operacio_numerica'])) {
 <head>
     <meta charset="UTF-8">
     <title>Calculadora Web</title>
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <div class="container">
@@ -122,22 +135,22 @@ if (isset($_POST['operacio_numerica'])) {
         </form>
 
         <h2>Resultat</h2>
-    <p id="resultat">
-        <?php
-        if (!empty($resultat)) {
-            echo htmlspecialchars($resultat);
-        }
-        ?>
-    </p>
+        <p id="resultat">
+            <?php
+            if (!empty($resultat)) {
+                echo htmlspecialchars($resultat);
+            }
+            ?>
+        </p>
 
         <h2>Historial d'operacions</h2>
-        <ul id="historial">
-        <?php
-        foreach ($historial as $operacio) {
-            echo "<li>" . htmlspecialchars($operacio) . "</li>";
-        }
-        ?>
-        </ul>
+            <ul id="historial">
+            <?php
+            foreach ($historial as $operacio) {
+                echo "<li>" . htmlspecialchars($operacio) . "</li>";
+            }
+            ?>
+            </ul>
     </div>
 </body>
 </html>

@@ -7,47 +7,62 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #c6cef8;
     display: flex;
     justify-content: center;  
     align-items: center;      
-    height: 900px;            
+        
 }
 
 .container {
-    width: 90%;              /* Fes que l'ample ocupi tot el dispositiu */
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
+    margin-top: 5%;
+    width: 90%;             
+    padding: 80px;
+    background-color: #f3fdff;
+    border-radius: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-h1, h2 {
+h1{
     color: #333;
     margin-bottom: 35px;
+    text-align: center;
+    font-size: 40px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
 }
 
 form {
+    border-radius: 30px;
+    background-color: #c6cef8;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 50px;
     margin-left: 40px;
+    margin-right: 40px;
 }
 
 input[type="text"] {
-    width: 100%;             /* Amplada completa */
-    padding: 15px;
+    width: 100%;             
+    padding: 25px;
     margin-bottom: 10px;
-    font-size: 18px;
-    border: 1px solid #ccc;
+    font-size: 30px;
+    border: 1px solid #cccccc;
     border-radius: 5px;
 }
 
 button {
-    width: 100px;            /* Més ample per facilitar clics */
+    width: 230px;            
     padding: 10px;
     margin: 5px;
-    font-size: 15px;
-    background-color: #4CAF50;
+    font-size: 35px;
+    background-color: #a468db;
     color: white;
     border: none;
     border-radius: 5px;
@@ -55,24 +70,35 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #8733d5;
 }
 
 #resultat {
+    border-radius: 30px;
+    background-color: #c6cef8;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+    margin-left: 40px;
+    margin-right: 40px;
     font-size: 22px;
     color: #333;
     margin-top: 20px;
+    padding-bottom: 30px;
 }
 
 #historial {
     list-style-type: none;
     padding: 0;
     margin-top: 20px;
+    font-size: 20px;
+    color: #333;
 }
 
 #historial li {
+    border: 1px solid #a8b4f2;
     background-color: #fff;
-    margin: 5px 0;
+    margin: 5px;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
