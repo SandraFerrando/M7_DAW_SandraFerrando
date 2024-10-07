@@ -55,6 +55,7 @@ $historial = isset($_POST['historial']) ? json_decode($_POST['historial'], true)
 // Processar la sol·licitud de l'usuari
 $resultat = null;
 $operacio_text = '';
+$usuari_error = false;
 
 if (isset($_POST['operacio_numerica'])) {
     $num1 = $_POST['num1'];
@@ -68,14 +69,16 @@ if (isset($_POST['operacio_numerica'])) {
 
     } else {
         // Validar que el segon número estige present per a operacions diferents de factorial
-        if (!isset($num2) || empty($num2)) {
+        if (!is_numeric($num2)) {
             $resultat = "Error: Falta el segon número per l'operació.";
             $operacio_text = ''; // No mostrar operació incompleta
+            $usuari_error = true;
         } elseif ($operacio == '/') {
             // Validar que en una divisio el segon número no sigue zero
             if ($num2 == 0) {
                 $resultat = "Error: No es pot dividir per zero";
                 $operacio_text = ''; // No mostrar operació incompleta
+                $usuari_error = true;
             } else {
                 $resultat = operacio_numerica($num1, $num2, $operacio);
                 $operacio_text = "$num1 $operacio $num2 = $resultat";
@@ -85,8 +88,9 @@ if (isset($_POST['operacio_numerica'])) {
             $operacio_text = "$num1 $operacio $num2 = $resultat";
         }
     }
-    if ($resultat !== null) {
-        array_unshift($historial, $operacio_text);
+    
+    if ($resultat !== null and $usuari_error == false) {
+            array_unshift($historial, $operacio_text);
     }   
 }
 if (isset($_POST['operacio_string'])) {
@@ -112,27 +116,29 @@ if (isset($_POST['operacio_string'])) {
     <div class="container">
         <h1>Calculadora Web</h1>
         
-        <h2>Operacions numèriques</h2>
-        <form id="form-numeric" method="post">
-            <input type="text" name="num1" required placeholder="Número 1"><br>
-            <input type="text" name="num2" placeholder="Número 2" 
-            ><br>
-            <button type="submit" name="operacio_numerica" value="+">+</button>
-            <button type="submit" name="operacio_numerica" value="-">-</button>
-            <button type="submit" name="operacio_numerica" value="*">*</button>
-            <button type="submit" name="operacio_numerica" value="/">/</button>
-            <button type="submit" name="operacio_numerica" value="!">!</button>
-            <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
-        </form>
+        <div class="form-wrapper">
+            <form id="form-numeric" method="post">
+                <h2>Operacions numèriques</h2>
+                <input type="text" name="num1" required placeholder="Número 1"><br>
+                <input type="text" name="num2" placeholder="Número 2" 
+                ><br>
+                <button class="small-button" type="submit" name="operacio_numerica" value="+">+</button>
+                <button class="small-button" type="submit" name="operacio_numerica" value="-">-</button>
+                <button class="small-button" type="submit" name="operacio_numerica" value="*">*</button>
+                <button class="small-button" type="submit" name="operacio_numerica" value="/">/</button>
+                <button class="small-button" type="submit" name="operacio_numerica" value="!">!</button>
+                <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
+            </form>
 
-        <h2>Operacions amb strings</h2>
-        <form id="form-string" method="post">
-            <input type="text" name="string1" required placeholder="String 1">
-            <input type="text" name="string2" required placeholder="String 2"><br>
-            <button type="submit" name="operacio_string" value="concatenar">Concatenar</button>
-            <button type="submit" name="operacio_string" value="eliminar">Eliminar</button>
-            <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
-        </form>
+            <form id="form-string" method="post">
+                <h2>Operacions amb strings</h2>
+                <input type="text" name="string1" required placeholder="String 1">
+                <input type="text" name="string2" required placeholder="String 2"><br>
+                <button class="large-button" type="submit" name="operacio_string" value="concatenar">Concatenar</button>
+                <button class="large-button" type="submit" name="operacio_string" value="eliminar">Eliminar</button>
+                <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
+            </form>
+        </div>
 
         <h2>Resultat</h2>
         <p id="resultat">
