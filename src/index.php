@@ -1,5 +1,5 @@
 <?php
-// Definició de constants
+// Si es vol fer factorials de forma iterativa ha de estar en true, si es vol fer de forma recursiva ha de estar en false
 define('FACTORIAL_ITERATIU', true);
 
 // Funció per calcular el factorial de forma iterativa
@@ -22,15 +22,15 @@ function factorial_recursiu($n) {
 // Funció per realitzar operacions numèriques
 function operacio_numerica($num1, $num2, $operacio) {
     switch ($operacio) {
-        case 'suma':
+        case '+':
             return $num1 + $num2;
-        case 'resta':
+        case '-':
             return $num1 - $num2;
-        case 'multiplicacio':
+        case '*':
             return $num1 * $num2;
-        case 'divisio':
+        case '/':
             return $num2 != 0 ? $num1 / $num2 : "Error: Divisió per zero";
-        case 'factorial':
+        case '!':
             return FACTORIAL_ITERATIU ? factorial_iteratiu($num1) : factorial_recursiu($num1);
         default:
             return "Operació no vàlida";
@@ -55,42 +55,31 @@ $historial = isset($_POST['historial']) ? json_decode($_POST['historial'], true)
 // Processar la sol·licitud de l'usuari
 $resultat = null;
 $operacio_text = '';
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['operacio_numerica'])) {
-        $num1 = $_POST['num1'];
-        $num2 = $_POST['num2'];
-        $operacio = $_POST['operacio_numerica'];
-        $resultat = operacio_numerica($num1, $num2, $operacio);
-        $operacio_text = "$num1 $operacio $num2 = $resultat";
-    } elseif (isset($_POST['operacio_string'])) {
-        $string1 = $_POST['string1'];
-        $string2 = $_POST['string2'];
-        $operacio = $_POST['operacio_string'];
-        $resultat = operacio_string($string1, $string2, $operacio);
-        $operacio_text = "$string1 $operacio $string2 = $resultat";
-    }
-    
-    // Afegir l'operació actual a l'historial
-    if ($resultat !== null) {
-        array_unshift($historial, $operacio_text);
-
-    }
-}
 
 if (isset($_POST['operacio_numerica'])) {
     $num1 = $_POST['num1'];
     $num2 = isset($_POST['num2']) ? $_POST['num2'] : null;
     $operacio = $_POST['operacio_numerica'];
 
-    if ($operacio == 'factorial') {
+    if ($operacio == '!') {
         // El factorial solo necesita el primer número
         $resultat = operacio_numerica($num1, 0, $operacio);
         $operacio_text = "$num1! = $resultat";
+
     } else {
-        // Validar que el segundo número esté presente para operaciones distintas de factorial
-        if (empty($num2)) {
-            $resultat = "Error: Falta el segon número per l'operació $operacio.";
-            $operacio_text = ''; // No mostrar operación incompleta
+        // Validar que el segon número estige present per a operacions diferents de factorial
+        if (!isset($num2) || empty($num2)) {
+            $resultat = "Error: Falta el segon número per l'operació.";
+            $operacio_text = ''; // No mostrar operació incompleta
+        } elseif ($operacio == '/') {
+            // Validar que en una divisio el segon número no sigue zero
+            if ($num2 == 0) {
+                $resultat = "Error: No es pot dividir per zero";
+                $operacio_text = ''; // No mostrar operació incompleta
+            } else {
+                $resultat = operacio_numerica($num1, $num2, $operacio);
+                $operacio_text = "$num1 $operacio $num2 = $resultat";
+            }
         } else {
             $resultat = operacio_numerica($num1, $num2, $operacio);
             $operacio_text = "$num1 $operacio $num2 = $resultat";
@@ -114,11 +103,11 @@ if (isset($_POST['operacio_numerica'])) {
         <input type="text" name="num1" required placeholder="Número 1"><br>
         <input type="text" name="num2" placeholder="Número 2" 
         ><br>
-        <button type="submit" name="operacio_numerica" value="suma">+</button>
-        <button type="submit" name="operacio_numerica" value="resta">-</button>
-        <button type="submit" name="operacio_numerica" value="multiplicacio">*</button>
-        <button type="submit" name="operacio_numerica" value="divisio">/</button>
-        <button type="submit" name="operacio_numerica" value="factorial">!</button>
+        <button type="submit" name="operacio_numerica" value="+">+</button>
+        <button type="submit" name="operacio_numerica" value="-">-</button>
+        <button type="submit" name="operacio_numerica" value="*">*</button>
+        <button type="submit" name="operacio_numerica" value="/">/</button>
+        <button type="submit" name="operacio_numerica" value="!">!</button>
         <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
     </form>
 
