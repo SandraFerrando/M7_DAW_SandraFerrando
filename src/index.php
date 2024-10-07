@@ -93,49 +93,51 @@ if (isset($_POST['operacio_numerica'])) {
 <head>
     <meta charset="UTF-8">
     <title>Calculadora Web</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="main.css" />
 </head>
 <body>
-    <h1>Calculadora Web</h1>
-    
-    <h2>Operacions numèriques</h2>
-    <form id="form-numeric" method="post">
-        <input type="text" name="num1" required placeholder="Número 1"><br>
-        <input type="text" name="num2" placeholder="Número 2" 
-        ><br>
-        <button type="submit" name="operacio_numerica" value="+">+</button>
-        <button type="submit" name="operacio_numerica" value="-">-</button>
-        <button type="submit" name="operacio_numerica" value="*">*</button>
-        <button type="submit" name="operacio_numerica" value="/">/</button>
-        <button type="submit" name="operacio_numerica" value="!">!</button>
-        <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
-    </form>
+    <div class="container">
+        <h1>Calculadora Web</h1>
+        
+        <h2>Operacions numèriques</h2>
+        <form id="form-numeric" method="post">
+            <input type="text" name="num1" required placeholder="Número 1"><br>
+            <input type="text" name="num2" placeholder="Número 2" 
+            ><br>
+            <button type="submit" name="operacio_numerica" value="+">+</button>
+            <button type="submit" name="operacio_numerica" value="-">-</button>
+            <button type="submit" name="operacio_numerica" value="*">*</button>
+            <button type="submit" name="operacio_numerica" value="/">/</button>
+            <button type="submit" name="operacio_numerica" value="!">!</button>
+            <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
+        </form>
 
-    <h2>Operacions amb strings</h2>
-    <form id="form-string" method="post">
-        <input type="text" name="string1" required placeholder="String 1">
-        <input type="text" name="string2" required placeholder="String 2"><br>
-        <button type="submit" name="operacio_string" value="concatenar">Concatenar</button>
-        <button type="submit" name="operacio_string" value="eliminar">Eliminar</button>
-        <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
-    </form>
+        <h2>Operacions amb strings</h2>
+        <form id="form-string" method="post">
+            <input type="text" name="string1" required placeholder="String 1">
+            <input type="text" name="string2" required placeholder="String 2"><br>
+            <button type="submit" name="operacio_string" value="concatenar">Concatenar</button>
+            <button type="submit" name="operacio_string" value="eliminar">Eliminar</button>
+            <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
+        </form>
 
-    <h2>Resultat</h2>
-<p id="resultat">
-    <?php
-    if (!empty($resultat)) {
-        echo htmlspecialchars($resultat);
-    }
-    ?>
-</p>
+        <h2>Resultat</h2>
+    <p id="resultat">
+        <?php
+        if (!empty($resultat)) {
+            echo htmlspecialchars($resultat);
+        }
+        ?>
+    </p>
 
-    <h2>Historial d'operacions</h2>
-    <ul id="historial">
-    <?php
-    foreach ($historial as $operacio) {
-        echo "<li>" . htmlspecialchars($operacio) . "</li>";
-    }
-    ?>
-    </ul>
+        <h2>Historial d'operacions</h2>
+        <ul id="historial">
+        <?php
+        foreach ($historial as $operacio) {
+            echo "<li>" . htmlspecialchars($operacio) . "</li>";
+        }
+        ?>
+        </ul>
+    </div>
 </body>
 </html>
