@@ -110,7 +110,7 @@ if (isset($_POST['operacio_string'])) {
 <head>
     <meta charset="UTF-8">
     <title>Calculadora Web</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="main_Bootstrap.css">
 </head>
 <body>
     <div class="container">
