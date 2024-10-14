@@ -109,54 +109,65 @@ if (isset($_POST['operacio_string'])) {
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora Web</title>
-    <link rel="stylesheet" href="main_Bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
     <div class="container">
-        <h1>Calculadora Web</h1>
+        <h1 class="text-center">Calculadora Web</h1>
         
         <div class="form-wrapper">
-            <form id="form-numeric" method="post">
+            <form id="form-numeric" method="post" class="mb-4">
                 <h2>Operacions numèriques</h2>
-                <input type="text" name="num1" required placeholder="Número 1"><br>
-                <input type="text" name="num2" placeholder="Número 2" 
-                ><br>
-                <button class="small-button" type="submit" name="operacio_numerica" value="+">+</button>
-                <button class="small-button" type="submit" name="operacio_numerica" value="-">-</button>
-                <button class="small-button" type="submit" name="operacio_numerica" value="*">*</button>
-                <button class="small-button" type="submit" name="operacio_numerica" value="/">/</button>
-                <button class="small-button" type="submit" name="operacio_numerica" value="!">!</button>
+                <input type="text" name="num1" required placeholder="Número 1" class="form-control mb-3">
+                <input type="text" name="num2" placeholder="Número 2" class="form-control mb-3">
+                <div class="d-flex flex-wrap justify-content-between">
+                    <button class="btn btn-primary small-button" type="submit" name="operacio_numerica" value="+">+</button>
+                    <button class="btn btn-primary small-button" type="submit" name="operacio_numerica" value="-">-</button>
+                    <button class="btn btn-primary small-button" type="submit" name="operacio_numerica" value="*">*</button>
+                    <button class="btn btn-primary small-button" type="submit" name="operacio_numerica" value="/">/</button>
+                    <button class="btn btn-primary small-button" type="submit" name="operacio_numerica" value="!">!</button>
+                </div>
                 <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
             </form>
 
-            <form id="form-string" method="post">
+            <form id="form-string" method="post" class="mb-4">
                 <h2>Operacions amb strings</h2>
-                <input type="text" name="string1" required placeholder="String 1">
-                <input type="text" name="string2" required placeholder="String 2"><br>
-                <button class="large-button" type="submit" name="operacio_string" value="concatenar">Concatenar</button>
-                <button class="large-button" type="submit" name="operacio_string" value="eliminar">Eliminar</button>
+                <input type="text" name="string1" required placeholder="String 1" class="form-control mb-3">
+                <input type="text" name="string2" required placeholder="String 2" class="form-control mb-3">
+                <div class="d-flex flex-wrap justify-content-between">
+                    <button class="btn btn-secondary large-button" type="submit" name="operacio_string" value="concatenar">Concatenar</button>
+                    <button class="btn btn-secondary large-button" type="submit" name="operacio_string" value="eliminar">Eliminar</button>
+                </div>
                 <input type="hidden" name="historial" value="<?php echo htmlspecialchars(json_encode($historial)); ?>">
             </form>
         </div>
 
-        <h2>Resultat</h2>
-        <p id="resultat">
-            <?php
-            if (!empty($resultat)) {
-                echo htmlspecialchars($resultat);
-            }
-            ?>
-        </p>
+        <div class="result-wrapper">
+            <h2>Resultat</h2>
+            <p id="resultat" class="alert alert-success">
+                <?php
+                if (!empty($resultat)) {
+                    echo htmlspecialchars($resultat);
+                }
+                ?>
+            </p>
+        </div>
 
-        <h2>Historial d'operacions</h2>
-            <ul id="historial">
-            <?php
-            foreach ($historial as $operacio) {
-                echo "<li>" . htmlspecialchars($operacio) . "</li>";
-            }
-            ?>
+        <div class="history-wrapper">
+            <h2>Historial d'operacions</h2>
+            <ul id="historial" class="list-group">
+                <?php
+                foreach ($historial as $operacio) {
+                    echo "<li class='list-group-item'>" . htmlspecialchars($operacio) . "</li>";
+                }
+                ?>
             </ul>
+        </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
